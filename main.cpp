@@ -4,17 +4,18 @@
 #include <fstream>
 // Importing standard library file
 #include <stdlib.h>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <fstream>
 
 using namespace std;
 
 // Variables declared outside any function
 // hence scope is global, hence global variables
-string fname, lname, phone_num;
+string listn, fname, lname, phone_num;
 
 // Methods
-
-// Helper Methods followed by
-// Main driver method
 
 void addContact();
 void searchContact();
@@ -22,13 +23,37 @@ void help();
 void self_exit();
 bool check_digits(string);
 bool check_numbers(string);
+void sortContact();
+void deleteDuplicates();
 
+void sortContact(){
+    // Empty vector holding all names from file
+    vector<string> fname;
+
+    // Read names from file LineUp.txt
+    ifstream in("number.txt");
+    if(!in.is_open())
+        cout << "Unable to open file\n";
+
+    // this is wrong, by the way: while(in.good()){
+    string word;
+    while(getline(in, word))
+            fname.push_back(word);
+
+    sort(fname.begin(), fname.end());
+
+    // Loop to print names
+    for (size_t i = 0; i < fname.size(); i++)
+        cout << fname[i] << '\n';
+
+
+}
 // Method 1
 // Helper method
 void self_exit()
 {
 	system("cls");
-	cout << "\n\n\n\t\tThank You for using Contact-Saver!";
+	cout << "\n\n\n\t\tThank You for using In the Loop";
 	exit(1);
 }
 
@@ -97,7 +122,7 @@ void searchContact()
 			cout << "\nLast Name : " << lname;
 			cout << "\nPhone Number : " << phone_num;
 			found = true;
-			break;
+      break;
 		}
 	}
 	if (found == false)
@@ -147,12 +172,11 @@ bool check_numbers(string x)
 int main()
 {
 	int choice;
-	system("cls");
-	system("color 0A");
+
 	while (1) {
-		cout << "\n\n\n\t\t\tCONTACT SAVER";
+		cout << "\n\n\n\t\t\tSearch, Add and Sort";
 		cout << "\n\n\t1. Add Contact\n\t2. Search "
-				"Contact\n\t3. Help\n\t4. Exit\n\t> ";
+				"Contact\n\t3. Help\n\t4. Exit\n\t5. Sort\n\t> ";
 		cin >> choice;
 
 		// Switch case
@@ -171,6 +195,10 @@ int main()
 
 		case 4:
 			self_exit();
+			break;
+
+    case 5:
+			sortContact();
 			break;
 
 		default:
